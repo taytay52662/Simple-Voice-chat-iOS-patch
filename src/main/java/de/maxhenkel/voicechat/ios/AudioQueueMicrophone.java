@@ -85,7 +85,7 @@ public class AudioQueueMicrophone implements Microphone {
                 at.AudioQueueEnqueueBuffer(audioQueue, aqBuffers[i], 0, null);
             }
             open = true;
-        } catch (MicrophoneException e) {
+        } catch (Exception e) {
             throw e;
         } catch (Throwable t) {
             throw new RuntimeException("Failed to open iOS microphone: " + t.getMessage());
