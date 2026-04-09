@@ -16,17 +16,13 @@ public class MicrophoneManagerMixin {
             target = "de/maxhenkel/voicechat/voice/client/microphone/OpenALMicrophone"
         )
     )
-    private Microphone redirectMicrophone(int sampleRate, int bufferSize, String device) {
-        try {
-            AudioQueueMicrophone mic =
-                new AudioQueueMicrophone(48000, 960, null);
+    private Microphone redirectMic(int sampleRate, int bufferSize, String device) {
+        AudioQueueMicrophone mic =
+            new AudioQueueMicrophone(48000, 960, null);
 
-            mic.open();
-            mic.start();
+        mic.open();
+        mic.start();
 
-            return mic;
-        } catch (Throwable t) {
-            throw new RuntimeException(t);
-        }
+        return mic;
     }
 }
