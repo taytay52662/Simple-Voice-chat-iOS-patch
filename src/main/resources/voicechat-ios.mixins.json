@@ -3,6 +3,6 @@
   "minVersion": "0.8",
   "package": "de.maxhenkel.voicechat.mixin",
   "compatibilityLevel": "JAVA_21",
-  "client": ["MicrophoneManagerMixin","MicrophoneListMixin"],
+  "client": ["MicrophoneManagerMixin"],
   "injectors": {"defaultRequire": 1}
 }
