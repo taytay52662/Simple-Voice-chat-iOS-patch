@@ -50,7 +50,7 @@ public class AudioQueueMicrophone implements Microphone {
 
     @Override
     public void open() {
-        if (open) throw new MicrophoneException("Microphone already open");
+        if (open) throw new RuntimeException("Microphone already open");
         try {
             AudioToolbox at = AudioToolbox.INSTANCE;
             Memory asbd = new Memory(40);
@@ -75,12 +75,12 @@ public class AudioQueueMicrophone implements Microphone {
             };
             PointerByReference queueRef = new PointerByReference();
             int err = at.AudioQueueNewInput(asbd, callback, null, null, null, 0, queueRef);
-            if (err != AQ_OK) throw new MicrophoneException("AudioQueueNewInput failed: " + err);
+            if (err != AQ_OK) throw new RuntimeException("AudioQueueNewInput failed: " + err);
             audioQueue = queueRef.getValue();
             for (int i = 0; i < 3; i++) {
                 PointerByReference bufRef = new PointerByReference();
                 err = at.AudioQueueAllocateBuffer(audioQueue, bytesPerBuffer, bufRef);
-                if (err != AQ_OK) throw new MicrophoneException("AudioQueueAllocateBuffer failed: " + err);
+                if (err != AQ_OK) throw new RuntimeException("AudioQueueAllocateBuffer failed: " + err);
                 aqBuffers[i] = bufRef.getValue();
                 at.AudioQueueEnqueueBuffer(audioQueue, aqBuffers[i], 0, null);
             }
@@ -88,16 +88,16 @@ public class AudioQueueMicrophone implements Microphone {
         } catch (MicrophoneException e) {
             throw e;
         } catch (Throwable t) {
-            throw new MicrophoneException("Failed to open iOS microphone: " + t.getMessage());
+            throw new RuntimeException("Failed to open iOS microphone: " + t.getMessage());
         }
     }
 
     @Override
     public void start() {
-        if (!open) throw new MicrophoneException("Microphone is not open");
+        if (!open) throw new RuntimeException("Microphone is not open");
         started = true;
         int err = AudioToolbox.INSTANCE.AudioQueueStart(audioQueue, null);
-        if (err != AQ_OK) { started = false; throw new MicrophoneException("AudioQueueStart failed: " + err); }
+        if (err != AQ_OK) { started = false; throw new RuntimeException("AudioQueueStart failed: " + err); }
     }
 
     @Override
@@ -122,7 +122,7 @@ public class AudioQueueMicrophone implements Microphone {
 
     @Override
     public short[] read()  {
-        if (!open) throw new MicrophoneException("Microphone was not opened");
+        if (!open) throw new RuntimeException("Microphone was not opened");
         try {
             byte[] bytes = pcmQueue.poll(100, TimeUnit.MILLISECONDS);
             if (bytes == null) return new short[0];
