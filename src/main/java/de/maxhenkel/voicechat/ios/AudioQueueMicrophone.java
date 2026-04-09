@@ -49,7 +49,7 @@ public class AudioQueueMicrophone implements Microphone {
     }
 
     @Override
-    public void open() throws MicrophoneException {
+    public void open() {
         if (open) throw new MicrophoneException("Microphone already open");
         try {
             AudioToolbox at = AudioToolbox.INSTANCE;
@@ -93,7 +93,7 @@ public class AudioQueueMicrophone implements Microphone {
     }
 
     @Override
-    public void start() throws MicrophoneException {
+    public void start() {
         if (!open) throw new MicrophoneException("Microphone is not open");
         started = true;
         int err = AudioToolbox.INSTANCE.AudioQueueStart(audioQueue, null);
@@ -121,7 +121,7 @@ public class AudioQueueMicrophone implements Microphone {
     @Override public int available() { return pcmQueue.size() * bufferSize; }
 
     @Override
-    public short[] read() throws MicrophoneException {
+    public short[] read()  {
         if (!open) throw new MicrophoneException("Microphone was not opened");
         try {
             byte[] bytes = pcmQueue.poll(100, TimeUnit.MILLISECONDS);
