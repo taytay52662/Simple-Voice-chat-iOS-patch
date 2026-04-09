@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "id": "voicechat-ios",
+  "version": "1.0.0",
+  "name": "Simple Voice Chat iOS Patch",
+  "description": "Patches Simple Voice Chat microphone capture to use AudioQueue on iOS",
+  "environment": "client",
+  "entrypoints": {
+    "main": ["de.maxhenkel.voicechat.ios.VoicechatIOSPatch"]
+  },
+  "mixins": ["voicechat-ios.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.14.0",
+    "minecraft": ">=1.21",
+    "java": ">=21",
+    "voicechat": "*"
+  }
+}
