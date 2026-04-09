@@ -14,7 +14,7 @@ dependencies {
     minecraft "com.mojang:minecraft:1.21.11"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.16.0"
-    modCompileOnly "de.maxhenkel.voicechat:voicechat-fabric=1.21.11:2.6,15"
+    modCompileOnly filetree(dir: 'libs', include: ['*.jar'])
     compileOnly 'net.java.dev.jna:jna:5.13.0'
 }
 java {
