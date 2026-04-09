@@ -17,12 +17,6 @@ public class MicrophoneManagerMixin {
         )
     )
     private Microphone redirectMic(int sampleRate, int bufferSize, String device) {
-        AudioQueueMicrophone mic =
-            new AudioQueueMicrophone(48000, 960, null);
-
-        mic.open();
-        mic.start();
-
-        return mic;
+        return new AudioQueueMicrophone(sampleRate, bufferSize, device);
     }
 }
