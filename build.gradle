@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '1.15.5'
+    id 'fabric-loom' version '1.7-SNAPSHOT'
     id 'java'
 }
 version = '1.0.0'
@@ -14,7 +14,7 @@ dependencies {
     minecraft "com.mojang:minecraft:1.21.11"
     mappings loom.officialMojangMappings()
     modImplementation "net.fabricmc:fabric-loader:0.16.0"
-    modCompileOnly fileTree(dir: 'libs', include: ['*.jar'])
+    CompileOnly fileTree(dir: 'libs', include: ['*.jar'])
     compileOnly 'net.java.dev.jna:jna:5.13.0'
 }
 java {
