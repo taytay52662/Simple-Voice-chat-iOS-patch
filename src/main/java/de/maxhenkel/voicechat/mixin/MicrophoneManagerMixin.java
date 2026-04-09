@@ -1,5 +1,3 @@
-package de.maxhenkel.voicechat.mixin;
-
 import de.maxhenkel.voicechat.ios.AudioQueueMicrophone;
 import de.maxhenkel.voicechat.voice.client.microphone.Microphone;
 import de.maxhenkel.voicechat.voice.client.microphone.MicrophoneManager;
@@ -8,22 +6,18 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MicrophoneManager.class)
+@Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneManagerMixin {
 
-    @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true, remap = false)
     private static void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
         try {
-
             if (!AudioQueueMicrophone.isAvailable()) {
                 return;
             }
 
-            int sampleRate = 48000;
-            int bufferSize = 960;
-
             AudioQueueMicrophone mic =
-                    new AudioQueueMicrophone(sampleRate, bufferSize, null);
+                    new AudioQueueMicrophone(48000, 960, null);
 
             mic.open();
             mic.start();
@@ -31,11 +25,7 @@ public class MicrophoneManagerMixin {
             cir.setReturnValue(mic);
             cir.cancel();
 
-            System.out.println("[VoiceChat iOS] Using AudioQueue microphone");
-
-        } catch (Throwable t) {
-            System.err.println("[VoiceChat iOS] Failed to init microphone");
-            t.printStackTrace();
+        } catch (Throwable ignored) {
         }
     }
 }
