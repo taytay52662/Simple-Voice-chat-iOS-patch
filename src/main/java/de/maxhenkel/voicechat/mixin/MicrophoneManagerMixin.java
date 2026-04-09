@@ -12,7 +12,7 @@ import java.lang.reflect.Field;
 @Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneManagerMixin {
     @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true, remap = false)
-    private void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) throws MicrophoneException {
+    private static void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) throws MicrophoneException {
         if (!AudioQueueMicrophone.isAvailable()) return;
         String deviceName = null;
         try {

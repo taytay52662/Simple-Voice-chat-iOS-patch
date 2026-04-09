@@ -10,7 +10,7 @@ import java.util.List;
 @Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneListMixin {
     @Inject(method = "getAllMicrophones", at = @At("HEAD"), cancellable = true, remap = false)
-    private void injectIOSMicList(CallbackInfoReturnable<List<String>> cir) {
+    private static void injectIOSMicList(CallbackInfoReturnable<List<String>> cir) {
         if (!AudioQueueMicrophone.isAvailable()) return;
         cir.setReturnValue(AudioQueueMicrophone.getDeviceNames());
     }
