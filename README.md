@@ -9,5 +9,5 @@ to download the simple vocie chat mod for 1.21.11
 
 
 update: ive managed to remove the error where your mic
-was unavailable. the only thjng left is to make the
+was unavailable. the only thing left is to make the
 game not crash
