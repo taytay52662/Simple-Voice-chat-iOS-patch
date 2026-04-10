@@ -138,4 +138,3 @@ public class AudioQueueMicrophone implements Microphone {
     public static boolean isAvailable() {
         return true; } 
     }
-}
