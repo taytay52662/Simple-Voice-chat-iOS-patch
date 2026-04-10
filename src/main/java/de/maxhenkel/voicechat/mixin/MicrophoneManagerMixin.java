@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public class MicrophoneManagerMixin {
 
     @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true, remap = false)
-    private static void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
+    private void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
         if (!AudioQueueMicrophone.isAvailable()) return;
         try {
             AudioQueueMicrophone mic = new AudioQueueMicrophone(48000, 960, null);
