@@ -1,25 +1,26 @@
-package de.maxhenkel.voicechat.mixins;
+package de.maxhenkel.voicechat.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
+import de.maxhenkel.voicechat.ios.AudioQueueMicrophone;
+import de.maxhenkel.voicechat.voice.client.MicrophoneException;
 import de.maxhenkel.voicechat.voice.client.microphone.Microphone;
 import de.maxhenkel.voicechat.voice.client.microphone.MicrophoneManager;
-import de.maxhenkel.voicechat.voice.client.microphone.IOSMicrophone;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-@Mixin(MicrophoneManager.class)
+@Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneManagerMixin {
 
-    @Redirect(
-        method = "createMicrophone",
-        at = @At(
-            value = "NEW",
-            target = "Lde/maxhenkel/voicechat/voice/client/microphone/Microphone;"
-        )
-    )
-    private static Microphone redirectCreateMicrophone() {
-        // Replace the original Microphone with the iOS version
-        return new IOSMicrophone();
+    @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true, remap = false)
+    private static void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
+        if (!AudioQueueMicrophone.isAvailable()) return;
+        try {
+            AudioQueueMicrophone mic = new AudioQueueMicrophone(48000, 960, null);
+            mic.open();
+            cir.setReturnValue(mic);
+        } catch (RuntimeException e) {
+            // Fall through to original if AudioQueue fails
+        }
     }
-
 }
