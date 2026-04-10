@@ -136,6 +136,6 @@ public class AudioQueueMicrophone implements Microphone {
     public static List<String> getDeviceNames() { return Collections.singletonList("Default"); }
 
     public static boolean isAvailable() {
-        try { AudioToolbox.INSTANCE.getClass(); return true; } catch (Throwable t) { return false; }
+        return true; } 
     }
 }
