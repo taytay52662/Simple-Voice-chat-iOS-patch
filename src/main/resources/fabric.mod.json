@@ -6,7 +6,7 @@
   "description": "Patches Simple Voice Chat microphone capture to use AudioQueue on iOS",
   "environment": "client",
   "entrypoints": {
-    "main": ["de.maxhenkel.voicechat.ios.VoicechatIOSPatch"]
+    "client": ["de.maxhenkel.voicechat.ios.VoicechatIOSPatch"]
   },
   "mixins": ["voicechat-ios.mixins.json"],
   "depends": {
