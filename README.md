@@ -10,7 +10,7 @@ This project is currently focused only on:
 
 - iOS / iPadOS  
 - Fabric  
-- Minecraft 1.21.11  
+- Minecraft Java Edition 1.21.11  
 
 Everything else is not supported.
 
