@@ -10,14 +10,17 @@ import org.spongepowered.asm.mixin.Overwrite;
 @Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneManagerMixin {
 
-    /**
-     * @author voicechat-ios
-     * @reason Replace microphone creation with iOS AudioQueue implementation
-     */
-    @Overwrite(remap = false)
-    public Microphone createMicrophone() throws MicrophoneException {
-        AudioQueueMicrophone mic = new AudioQueueMicrophone(48000, 960, null);
-        mic.open();
-        return mic;
-    }
+```
+/**
+ * @author voicechat-ios
+ * @reason Replace microphone creation with iOS AudioQueue implementation
+ */
+@Overwrite(remap = false)
+public static Microphone createMicrophone() throws MicrophoneException {
+    AudioQueueMicrophone mic = new AudioQueueMicrophone(48000, 960, null);
+    mic.open();
+    return mic;
+}
+```
+
 }
