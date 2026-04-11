@@ -1,7 +1,7 @@
+
 package de.maxhenkel.voicechat.mixin;
 
 import de.maxhenkel.voicechat.ios.AudioQueueMicrophone;
-import de.maxhenkel.voicechat.voice.client.MicrophoneException;
 import de.maxhenkel.voicechat.voice.client.microphone.Microphone;
 import de.maxhenkel.voicechat.voice.client.microphone.MicrophoneManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -12,8 +12,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(value = MicrophoneManager.class, remap = false)
 public class MicrophoneManagerMixin {
 
-    @Inject(method = "createMicrophone", at = @At("HEAD"), cancellable = true, remap = false)
-    private void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
+    @Inject(
+        method = "createMicrophone()Lde/maxhenkel/voicechat/voice/client/microphone/Microphone;",
+        at = @At("HEAD"),
+        cancellable = true,
+        remap = false
+    )
+    private static void injectIOSMicrophone(CallbackInfoReturnable<Microphone> cir) {
         if (!AudioQueueMicrophone.isAvailable()) return;
         try {
             AudioQueueMicrophone mic = new AudioQueueMicrophone(48000, 960, null);
