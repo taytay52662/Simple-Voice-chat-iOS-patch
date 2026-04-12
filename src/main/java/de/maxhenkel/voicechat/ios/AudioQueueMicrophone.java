@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 public class AudioQueueMicrophone implements Microphone {
     public interface AudioToolbox extends Library {
-        AudioToolbox INSTANCE = (AudioToolbox) Native.loadLibrary("AudioToolbox", AudioToolbox.class);
+        AudioToolbox INSTANCE = Native.load("AudioToolbox", AudioToolbox.class);
         int AudioQueueNewInput(Pointer inFormat, Callback inCallbackProc, Pointer inUserData,
             Pointer inCallbackRunLoop, Pointer inCallbackRunLoopMode, int inFlags, PointerByReference outAQ);
         int AudioQueueAllocateBuffer(Pointer inAQ, int inBufferByteSize, PointerByReference outBuffer);
