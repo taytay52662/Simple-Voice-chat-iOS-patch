@@ -22,7 +22,6 @@ int AudioQueueStop(Pointer inAQ, byte inImmediate);
 int AudioQueueDispose(Pointer inAQ, byte inImmediate);
 }
 
-```
 public interface AudioQueueInputCallback extends Callback {
     void invoke(Pointer userData, Pointer inAQ, Pointer inBuffer,
         Pointer inStartTime, int inNumPackets, Pointer inPacketDescs);
